@@ -2,7 +2,7 @@
 
 A command line utlity for crating and practicing flashcards!
 
-`
+```
 A CLI application for creating Flashcards in Go!
 
 Usage:
@@ -20,4 +20,4 @@ Flags:
   -t, --toggle          Help message for toggle
 
 Use "flashy [command] --help" for more information about a command.
-`
+```

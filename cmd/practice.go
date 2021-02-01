@@ -17,6 +17,10 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"bufio"
+	"strings"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -24,22 +28,68 @@ import (
 var practiceCmd = &cobra.Command{
 	Use:   "practice",
 	Short: "Pratice your premade flashcards",
-	Long: `Given the name of the s`,
+	Long: `Given the name of the flashcard set, user can practice the set in two modes
+-l, --linear   : for practicing in the order that the set was created in
+-s, --shuffle  : for practicing the set in shuffled order`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("practice called")
+		clear()
+		lin, _ := cmd.Flags().GetString("linear")
+		shuff, _ := cmd.Flags().GetString("shuffle")
+
+		if shuff == "" {
+			// linear called
+			file, _ := os.Open("." + lin + ".csv")
+			scanner := bufio.NewScanner(file)
+			for scanner.Scan() {
+				qna := strings.Split(scanner.Text(), ",")
+				ques := qna[0]
+				ans := qna[1]
+				fmt.Println("*****************************************")
+				fmt.Println(ques + "?")
+				fmt.Println("*****************************************")
+				reader := bufio.NewReader(os.Stdin)
+				answer, _ := reader.ReadString('\n')
+				answer = strings.TrimSuffix(answer, "\n")
+				clear()
+				if (strings.Compare(answer, ans) == 0) {
+					fmt.Println("*****************************************")
+					fmt.Println("Correct answer!!")
+					fmt.Println("*****************************************")
+					time.Sleep(2 * time.Second)
+				} else {
+					fmt.Println("*****************************************")
+					fmt.Println("Wrong answer! :(")
+					fmt.Println("*****************************************")
+					fmt.Println("The correct answer was \n" + ans)
+					fmt.Println("*****************************************")
+					time.Sleep(2 * time.Second)
+				}
+				clear()
+			}
+			file.Close()
+		}
+		if lin == "" {
+			// shuffle called
+			file, _ := os.Open("." + shuff + ".csv")
+			scanner := bufio.NewScanner(file)
+			for scanner.Scan() {
+				fmt.Println(scanner.Text())
+			}
+			file.Close()
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(practiceCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// practiceCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// practiceCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	practiceCmd.Flags().StringP(
+		"linear",
+		"l",
+		"",
+		"topic of the flashcard set")
+	practiceCmd.Flags().StringP(
+		"shuffle",
+		"s",
+		"",
+		"topic of the flashcard set")
 }

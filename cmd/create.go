@@ -25,6 +25,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func clear() {
+	clear := exec.Command("clear")
+	clear.Stdout = os.Stdout
+	clear.Run()
+}
+
 var createCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Create flashcards with a particular topic",
@@ -37,11 +43,13 @@ flashy create -t [topic]
 	Run: func(cmd *cobra.Command, args []string) {
 		topicname, _ := cmd.Flags().GetString("topic")
 		reader := bufio.NewReader(os.Stdin)
-		file, _ := os.Create("./." + topicname + ".csv")
+		file, _ := os.Create("." + topicname + ".csv")
 
+		clear()
 		var num int
 		fmt.Println("Enter the number of questions")
 		fmt.Scanf("%d", &num)
+		clear()
 
 		writer := bufio.NewWriter(file)
 		for a := 0; a < num; a++ {
@@ -56,9 +64,7 @@ flashy create -t [topic]
 			answer = strings.TrimSuffix(answer, "\n")
 
 			writer.WriteString(question + "," + answer + "\n")
-			clear := exec.Command("clear")
-			clear.Stdout = os.Stdout
-			clear.Run()
+			clear()
 		}
 		writer.Flush()
 	},
@@ -71,6 +77,4 @@ func init() {
 		"t",
 		"",
 		"topic of the flashcard set")
-	createCmd.MarkFlagFilename("file")
-
 }

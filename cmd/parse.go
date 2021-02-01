@@ -24,7 +24,7 @@ import (
 // parseCmd represents the parse command
 var parseCmd = &cobra.Command{
 	Use:   "parse",
-	Short: "A brief description of your command",
+	Short: "Parse a file to create a flashcard set",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 

@@ -1,9 +1,8 @@
-module flashy
+module siddhantrao23/flashy
 
 go 1.14
 
 require (
-	github.com/mitchellh/go-homedir v1.1.0
-	github.com/spf13/cobra v1.1.1
-	github.com/spf13/viper v1.7.1
+	github.com/gin-gonic/contrib v0.0.0-20201101042839-6a891bf89f19
+	github.com/gin-gonic/gin v1.6.3
 )

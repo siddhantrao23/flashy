@@ -1,5 +1,5 @@
 /*
-Copyright © 2021 Siddhant Rao <raosiddhant99@gmail.com>
+Copyright © 2021 Siddhant Rao (raosiddhant99@gmail.com)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -38,12 +38,14 @@ var createCmd = &cobra.Command{
 Overwrites flashcards if the topic name already exists.
 
 Synatx:
-flashy create -t [topic]
+flashy create [topic]
 `,
-	Run: func(cmd *cobra.Command, args []string) {
-		topicname, _ := cmd.Flags().GetString("topic")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			return fmt.Errorf("the create command should have only one argument, the name of the topic of the flashcard set")
+		}
 		reader := bufio.NewReader(os.Stdin)
-		file, _ := os.Create("." + topicname + ".csv")
+		file, _ := os.Create("." + args[0] + ".csv")
 
 		clear()
 		var num int
@@ -67,14 +69,10 @@ flashy create -t [topic]
 			clear()
 		}
 		writer.Flush()
+		return nil
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(createCmd)
-	createCmd.Flags().StringP(
-		"topic",
-		"t",
-		"",
-		"topic of the flashcard set")
 }

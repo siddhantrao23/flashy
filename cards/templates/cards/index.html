@@ -1,8 +1,11 @@
 {% if cards_set_list %}
     <ul>
     {% for set in cards_set_list %}
-        <!--<li><a href="{% url 'cards:detail' question.id %}">{{ question.question_text }}</a></li>-->
-        <li>{{ set.set_name }}</li>
+    <li>
+        <h2>
+            <a href="{% url 'cards:set' set.id %}">{{ set.set_name }}</a>
+        </h2>
+    </li>
     {% endfor %}
     </ul>
 {% else %}

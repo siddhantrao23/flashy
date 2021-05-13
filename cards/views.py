@@ -17,14 +17,19 @@ class SetView(generic.DetailView):
     template_name = 'cards/set.html'
 
 class CardView(View):
+    # figure out the range
     template_name = 'cards/card.html'
 
     def get(self, request, set_id, card_id):
         selected_set = get_object_or_404(Set, pk=set_id)
         try:
             selected_card = selected_set.card_set.get(id=card_id)
-            print(selected_card)
-            context = { 'set': selected_set, 'card': selected_card }
+            context = {
+                'set': selected_set,
+                'card': selected_card,
+                'prev_id': card_id-1,
+                'next_id': card_id+1,
+            }
         except (KeyError, Card.DoesNotExist):
             return render(request, 'cards/set.html', {
                 'set': selected_set,

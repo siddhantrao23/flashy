@@ -24,18 +24,30 @@ class CardView(View):
         selected_set = get_object_or_404(Set, pk=set_id)
         try:
             selected_card = selected_set.card_set.get(id=card_id)
-            context = {
-                'set': selected_set,
-                'card': selected_card,
-                'prev_id': card_id-1,
-                'next_id': card_id+1,
-            }
         except (KeyError, Card.DoesNotExist):
             return render(request, 'cards/set.html', {
                 'set': selected_set,
-                'error_message': "card not in range.",
+                'error_message': "That's all folks!.",
             })
         else:
+            context = {
+                'set': selected_set,
+                'card': selected_card,
+            }
+            try:
+                prev_card = selected_set.card_set.get(id=card_id-1)
+            except (KeyError, Card.DoesNotExist):
+                pass
+            else:
+                context['prev_card'] = prev_card
+            try:
+                next_card = selected_set.card_set.get(id=card_id+1)
+            except (KeyError, Card.DoesNotExist):
+                pass
+            else:
+                context['next_card'] = next_card
+
+            print(context)
             return render(request, self.template_name, context)
 
 def vote(request, question_id):

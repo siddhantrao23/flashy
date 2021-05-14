@@ -2,11 +2,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}">
 
 <div class="maincontainer">
+  {% if prev_card %}
   <ul>
-    <a href="{% url 'cards:card' set.id prev_id %}">
+    <a href="{% url 'cards:card' set.id prev_card.id %}">
       <li><span class="arrow arrow-top"></span></li>
     </a>
   </ul>
+  {% endif %}
   <div class="card">
     <div class="front">
       <h1>Question</h1>
@@ -17,9 +19,11 @@
       <p>{{ card.answer_text }}</p>
     </div>
   </div>
+  {% if next_card %}
   <ul>
-    <a href="{% url 'cards:card' set.id next_id %}">
+    <a href="{% url 'cards:card' set.id next_card.id %}">
       <li><span class="arrow arrow-bottom"></span></li>
     </a>
   </ul>
+  {% endif %}
 </div>

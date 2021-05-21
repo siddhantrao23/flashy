@@ -1,0 +1,15 @@
+<h1>{{ set.set_name }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<ul>
+  {% for card in set.card_set.all %}
+  <li>
+    <h2>{{ card.question_text }}</h2>
+    <h3>{{ card.answer_text }}</h3>
+  </li>
+  {% endfor %}
+</ul>
+
+<button class="btn btn-primary">Start Practice</button>
+<button class="btn btn-primary">Add Cards</button>

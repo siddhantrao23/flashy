@@ -11,5 +11,9 @@
   {% endfor %}
 </ul>
 
-<button class="btn btn-primary">Start Practice</button>
+{% if first_card %}
+<a href="{% url 'cards:card' set.id first_card.id %}">
+  <button class="btn btn-primary">Start Practice</button>
+</a>
+{% endif %}
 <button class="btn btn-primary">Add Cards</button>

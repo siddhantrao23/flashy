@@ -14,8 +14,19 @@ class IndexView(generic.ListView):
         return Set.objects.order_by('-set_name')
 
 class SetIndexView(generic.DetailView):
-    model = Set
     template_name = 'cards/set_index.html'
+
+    def get(self, request, set_id):
+        selected_set = get_object_or_404(Set, pk=set_id)
+        context = {
+            'set': selected_set,
+        }
+        first_card = selected_set.card_set.first()
+        if first_card:
+            context['first_card'] = first_card
+        # print(context)
+        return render(request, self.template_name, context)
+
 
 class CardView(View):
     template_name = 'cards/card.html'
@@ -25,8 +36,7 @@ class CardView(View):
         try:
             selected_card = selected_set.card_set.get(id=card_id)
         except (KeyError, Card.DoesNotExist):
-            return render(request, 'cards/set.html', {
-                'set': selected_set,
+            return render(request, 'cards/set_index.html', {
                 'error_message': "That's all folks!.",
             })
         else:
@@ -49,8 +59,7 @@ class CardView(View):
                 pass
             else:
                 context['next_card'] = next_card
-
-                print(context)
+            # print(context)
             return render(request, self.template_name, context)
 
 class NewSetView(View):
@@ -71,6 +80,5 @@ class NewSetView(View):
             )
             new_set.save()
             return HttpResponseRedirect(reverse('cards:setIndex', args=(new_set.id,)))
-
         # TODO have an error page
         return HttpResponseRedirect(reverse('cards:setIndex', args=(new_set.id,)))

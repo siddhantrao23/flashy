@@ -1,3 +1,8 @@
+{% extends "cards/base.html" %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block main %}
 {% if cards_set_list %}
     <ul>
     {% for set in cards_set_list %}
@@ -14,3 +19,4 @@
 {% else %}
     <p>No cards are available.</p>
 {% endif %}
+{% endblock %}

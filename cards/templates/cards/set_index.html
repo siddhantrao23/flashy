@@ -16,4 +16,7 @@
   <button class="btn btn-primary">Start Practice</button>
 </a>
 {% endif %}
-<button class="btn btn-primary">Add Cards</button>
+<br>
+<br>
+<a href="{% url 'cards:newCard' set.id %}">
+<button class="btn btn-primary">Add Card</button>

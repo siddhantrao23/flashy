@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import Set, Card
-from .forms import LoginForm, SetForm
+from .forms import LoginForm, SetForm, CardForm
 
 class IndexView(generic.ListView):
     template_name = 'cards/index.html'
@@ -71,7 +71,6 @@ class NewSetView(View):
 
     def post(self, request):
         form = SetForm(request.POST, request.FILES)
-        print(form)
         if form.is_valid():
             new_set = Set(
                 set_name = form.cleaned_data['set_name'],
@@ -82,3 +81,24 @@ class NewSetView(View):
             return HttpResponseRedirect(reverse('cards:setIndex', args=(new_set.id,)))
         # TODO have an error page
         return HttpResponseRedirect(reverse('cards:setIndex', args=(new_set.id,)))
+
+class NewCardView(View):
+    template_name = 'cards/card_form.html'
+
+    def get(self, request, set_id):
+        form = CardForm()
+        selected_set = get_object_or_404(Set, pk=set_id)
+        return render(request, self.template_name, {'form': form, 'set': selected_set})
+
+    def post(self, request, set_id):
+        form = CardForm(request.POST, request.FILES)
+        selected_set = get_object_or_404(Set, pk=set_id)
+        if form.is_valid():
+            selected_set.card_set.create(
+                question_text=form.cleaned_data['question_text'],
+                answer_text=form.cleaned_data['answer_text'],
+            )
+            selected_set.save()
+            return HttpResponseRedirect(reverse('cards:setIndex', args=(set_id,)))
+        # TODO have an error page
+        return HttpResponseRedirect(reverse('cards:setIndex', args=(set_id,)))

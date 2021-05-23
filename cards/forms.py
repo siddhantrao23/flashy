@@ -12,3 +12,7 @@ class SetForm(forms.Form):
         label='Description', max_length=300, required=False
     )
     private = forms.BooleanField(label='Private', required=False)
+
+class CardForm(forms.Form):
+    question_text = forms.CharField(label='Question', max_length=300)
+    answer_text = forms.CharField(label='Answer', max_length=300)

@@ -1,0 +1,22 @@
+{% extends "cards/base.html" %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block main %}
+{% if cards_set_list %}
+    <ul>
+    {% for set in cards_set_list %}
+    <!--TODO add private logic for user-->
+    {% if set.private == False %}
+    <li>
+        <h2>
+            <a href="{% url 'cards:setIndex' set.id %}">{{ set.set_name }}</a>
+        </h2>
+    </li>
+    {% endif %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No cards are available.</p>
+{% endif %}
+{% endblock %}

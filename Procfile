@@ -1,2 +1,2 @@
-release: python manage.py migrate
+release: ./relase-tasks.sh
 web: gunicorn flashy.wsgi --log-file -

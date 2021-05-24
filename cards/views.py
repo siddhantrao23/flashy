@@ -6,6 +6,7 @@ from django.views import generic
 from .models import Set, Card
 from .forms import LoginForm, SetForm, CardForm
 
+# homepage view
 class IndexView(generic.ListView):
     template_name = 'cards/index.html'
     context_object_name = 'cards_set_list'
@@ -13,6 +14,7 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return Set.objects.order_by('-set_name')
 
+# view of a particular set
 class SetIndexView(generic.DetailView):
     template_name = 'cards/set_index.html'
 
@@ -27,7 +29,7 @@ class SetIndexView(generic.DetailView):
         # print(context)
         return render(request, self.template_name, context)
 
-
+# view for the card being practiced
 class CardView(View):
     template_name = 'cards/card.html'
 
@@ -62,6 +64,7 @@ class CardView(View):
             # print(context)
             return render(request, self.template_name, context)
 
+# view for rendering the set form
 class NewSetView(View):
     template_name = 'cards/set_form.html'
 
@@ -82,6 +85,7 @@ class NewSetView(View):
         # TODO have an error page
         return HttpResponseRedirect(reverse('cards:setIndex', args=(new_set.id,)))
 
+# view for rendering the card form
 class NewCardView(View):
     template_name = 'cards/card_form.html'
 

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-_65k5q0^(rx1-k@h0@bsh@670a-!-9@q0zhht#s2806^k-8ly7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'flashy-cards-app.herokuapp.com']
 
 # Application definition
 

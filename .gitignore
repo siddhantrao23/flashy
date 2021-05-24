@@ -86,5 +86,6 @@ local_settings.py
 
 .env
 db.sqlite3
+/cards/migrations
 
 # Created by https://www.gitignore.io

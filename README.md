@@ -5,7 +5,7 @@ A Flashcard Application made using Django
 # Install
 
 ```
-git clone ps://github.com/siddhantrao23/flashy.git
+git clone https://github.com/siddhantrao23/flashy.git
 cd flashy
 pip3 install -r requirements.txt
 ```

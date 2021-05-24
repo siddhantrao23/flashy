@@ -1,1 +1,1 @@
-web: gunicorn flashy.wsgi
+web: gunicorn flashy.wsgi --log-file -

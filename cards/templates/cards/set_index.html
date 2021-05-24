@@ -1,5 +1,12 @@
-<h1>{{ set.set_name }}</h1>
+{% extends "cards/base.html" %}
 
+{% block title %}{{ set.set_name }}{% endblock %}
+
+{% block main %}
+<h1>{{ set.set_name }}</h1>
+<h3>{{ set.description }}</h3>
+
+<!--TODO remove error to error.html-->
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <ul>
@@ -19,4 +26,6 @@
 <br>
 <br>
 <a href="{% url 'cards:newCard' set.id %}">
-<button class="btn btn-primary">Add Card</button>
+  <button class="btn btn-primary">Add Card</button>
+</a>
+{% endblock %}

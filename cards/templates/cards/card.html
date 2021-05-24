@@ -1,7 +1,8 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}">
+{% extends "cards/base.html" %}
 
+{% block title %}{{ set.set_name }}{% endblock %}
 
+{% block main %}
 <div class="maincontainer">
   {% if prev_card %}
   <ul>
@@ -27,4 +28,9 @@
     </a>
   </ul>
   {% endif %}
+
+  <a href="{% url 'cards:setIndex' set.id %}">
+    <button class="btn btn-primary">Back</button>
+  </a>
 </div>
+{% endblock %}

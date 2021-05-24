@@ -4,7 +4,8 @@
 
 {% block main %}
 {% if cards_set_list %}
-    <ul>
+<p><h1>Cards you can Practice:</h1></p>
+<ul>
     {% for set in cards_set_list %}
     <!--TODO add private logic for user-->
     {% if set.private == False %}
@@ -12,11 +13,15 @@
         <h2>
             <a href="{% url 'cards:setIndex' set.id %}">{{ set.set_name }}</a>
         </h2>
+        <h3>{{ set.description }}</h3>
     </li>
     {% endif %}
     {% endfor %}
-    </ul>
+</ul>
 {% else %}
-    <p>No cards are available.</p>
+<p>No cards are available.</p>
 {% endif %}
+<a href="{% url 'cards:newSet' %}">
+    <button class="btn btn-primary">Add New Flashcard Set</button>
+</a>
 {% endblock %}

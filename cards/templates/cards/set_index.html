@@ -1,6 +1,6 @@
 {% extends "cards/base.html" %}
 
-{% block title %}{{ set.set_name }}{% endblock %}
+{% block title %}Index - {{ set.set_name }}{% endblock %}
 
 {% block main %}
 <h1>{{ set.set_name }}</h1>
@@ -9,14 +9,14 @@
 <!--TODO remove error to error.html-->
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<ul>
-  {% for card in set.card_set.all %}
-  <li>
-    <h2>{{ card.question_text }}</h2>
-    <h3>{{ card.answer_text }}</h3>
-  </li>
-  {% endfor %}
-</ul>
+<!-- <ul> -->
+<!--   {% for card in set.card_set.all %} -->
+<!--   <li> -->
+<!--     <h2>{{ card.question_text }}</h2> -->
+<!--     <h3>{{ card.answer_text }}</h3> -->
+<!--   </li> -->
+<!--   {% endfor %} -->
+<!-- </ul> -->
 
 {% if first_card %}
 <a href="{% url 'cards:card' set.id first_card.id %}">

@@ -1,6 +1,6 @@
 {% extends "cards/base.html" %}
 
-{% block title %}{{ set.set_name }}{% endblock %}
+{% block title %}Remove Card - {{ set.set_name }}{% endblock %}
 
 {% block main %}
 <form method="POST" action="/del_card/{{ set.id }}" enctype="multipart/form-data">

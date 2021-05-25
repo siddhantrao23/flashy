@@ -2,7 +2,8 @@
 
 A Flashcard Application made using Django
 
-This project is hosted on heroku and can be found <a href="https://flashy-cards-app.herokuapp.com>here</a>
+This project is hosted on heroku and can be found 
+<a href="https://flashy-cards-app.herokuapp.com">here</a>
 
 # Install
 

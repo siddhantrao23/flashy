@@ -129,6 +129,7 @@ class DelCardView(View):
     def get(self, request, set_id):
         selected_set = get_object_or_404(Set, pk=set_id)
         form = DelCardForm()
+        form.fields['selected_card'].queryset = selected_set.card_set
         return render(request, self.template_name, {'form': form, 'set': selected_set})
 
     def post(self, request, set_id):

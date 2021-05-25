@@ -3,14 +3,14 @@
 {% block title %}{{ set.set_name }}{% endblock %}
 
 {% block main %}
-<form method="POST" action="/cards/new_card/{{ set.id }}" enctype="multipart/form-data">
+<form method="POST" action="/del_card/{{ set.id }}" enctype="multipart/form-data">
   {% csrf_token %}
   <table>
     {{ form.as_table }}
     <tr>
       <td></td>
       <td>
-        <button type="submit" class="btn btn-primary">Create Card</button>
+        <button type="submit" class="btn btn-primary">Remove Card</button>
       </td>
     </tr>
   </table>

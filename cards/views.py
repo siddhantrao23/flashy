@@ -5,6 +5,7 @@ from django.views import generic
 
 from .models import Set, Card
 from .forms import LoginForm, SetForm, CardForm
+from .forms import DelSetForm, DelCardForm
 
 # homepage view
 class IndexView(generic.ListView):
@@ -85,6 +86,21 @@ class NewSetView(View):
         # TODO have an error page
         return HttpResponseRedirect(reverse('cards:setIndex', args=(new_set.id,)))
 
+class DelSetView(View):
+    template_name = 'cards/delete_set.html'
+
+    def get(self, request):
+        form = DelSetForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = DelSetForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.cleaned_data['selected_set'].delete()
+            return HttpResponseRedirect(reverse('cards:index'))
+        # TODO have an error page
+        return HttpResponseRedirect(reverse('cards:index'))
+
 # view for rendering the card form
 class NewCardView(View):
     template_name = 'cards/card_form.html'
@@ -106,3 +122,20 @@ class NewCardView(View):
             return HttpResponseRedirect(reverse('cards:setIndex', args=(set_id,)))
         # TODO have an error page
         return HttpResponseRedirect(reverse('cards:setIndex', args=(set_id,)))
+
+class DelCardView(View):
+    template_name = 'cards/delete_card.html'
+
+    def get(self, request, set_id):
+        selected_set = get_object_or_404(Set, pk=set_id)
+        form = DelCardForm()
+        return render(request, self.template_name, {'form': form, 'set': selected_set})
+
+    def post(self, request, set_id):
+        form = DelCardForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.cleaned_data['selected_card'].delete()
+            return HttpResponseRedirect(reverse('cards:setIndex', args=(set_id,)))
+        # TODO have an error page
+        return HttpResponseRedirect(reverse('cards:setIndex', args=(set_id,)))
+

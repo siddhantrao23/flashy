@@ -28,4 +28,7 @@
 <a href="{% url 'cards:newCard' set.id %}">
   <button class="btn btn-primary">Add Card</button>
 </a>
+<a href="{% url 'cards:delCard' set.id %}">
+  <button class="btn btn-primary">Remove Card</button>
+</a>
 {% endblock %}

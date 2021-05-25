@@ -113,3 +113,7 @@ ul {
 .arrow-bottom {
     transform: rotate(135deg);
 }
+
+.description {
+  text-indent: 20px;
+}

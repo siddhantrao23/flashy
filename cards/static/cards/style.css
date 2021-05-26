@@ -95,6 +95,7 @@ body {
 ul {
     position: relative;
     list-style: none;
+    margin: auto;
 }
 
 /* arrow common style */

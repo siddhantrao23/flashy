@@ -3,28 +3,44 @@
 {% block title %}Homepage{% endblock %}
 
 {% block main %}
+
 {% if cards_set_list %}
-<p><h1>Cards you can Practice</h1></p>
-<ul>
-    {% for set in cards_set_list %}
-    <!--TODO add private logic for user-->
-    {% if set.private == False %}
-    <li>
-        <h2>
-            <a href="{% url 'cards:setIndex' set.id %}">{{ set.set_name }}</a>
-        </h2>
-        <h4 class='description'>{{ set.description }}</h4>
-    </li>
-    {% endif %}
-    {% endfor %}
-</ul>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Cards you can Practice</h1>
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        {% for set in cards_set_list %}
+        <!--TODO add private logic for user-->
+        {% if set.private == False %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <a href="{% url 'cards:setIndex' set.id %}">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                        <rect width="100%" height="100%" fill="#55595c"/>
+                        <text x="40%" y="50%" fill="#eceeef" dy=".3em">{{ set.set_name }}</text>
+                    </svg>
+                </a>
+                <div class="card-body">
+                    <p class="card-text">
+                        {{ set.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
 {% else %}
 <p>No cards are available.</p>
 {% endif %}
-<a href="{% url 'cards:newSet' %}">
-    <button class="btn btn-primary">Add New Flashcard Set</button>
+<a class="btn btn-secondary" href="{% url 'cards:newSet' %}">
+    Add New Flashcard Set
 </a>
-<a href="{% url 'cards:delSet' %}">
-    <button class="btn btn-primary">Remove Flashcard Set</button>
+<a class="btn btn-secondary" href="{% url 'cards:delSet' %}">
+    Remove Flashcard Set
 </a>
 {% endblock %}
+</div>

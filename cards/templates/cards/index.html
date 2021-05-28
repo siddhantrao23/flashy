@@ -4,7 +4,7 @@
 
 {% block main %}
 
-{% if cards_set_list %}
+{% if set_list %}
 <section class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">Cards you can Practice</h1>
@@ -12,35 +12,42 @@
 </section>
 <div class="container">
     <div class="row">
-        {% for set in cards_set_list %}
+        {% for set in set_list %}
         <!--TODO add private logic for user-->
         {% if set.private == False %}
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm">
-                <a href="{% url 'cards:setIndex' set.id %}">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                    <a href="{% url 'cards:setIndex' set.id %}">
                         <rect width="100%" height="100%" fill="#55595c"/>
-                        <text x="40%" y="50%" fill="#eceeef" dy=".3em">{{ set.set_name }}</text>
-                    </svg>
-                </a>
+                    </a>
+                    <text x="45%" y="50%" fill="#eceeef" dy=".3em">{{ set.set_name }}</text>
+                </svg>
                 <div class="card-body">
-                    <p class="card-text">
-                        {{ set.description }}
-                    </p>
+                    <p class="card-text">{{ set.description }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <form method="POST" action="" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-success" name="practice" value="{{ set.id }}">Practice</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger" name="delete" value="{{ set.id }}">Delete</button>
+                             </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         {% endif %}
         {% endfor %}
     </div>
-{% else %}
-<p>No cards are available.</p>
-{% endif %}
-<a class="btn btn-secondary" href="{% url 'cards:newSet' %}">
-    Add New Flashcard Set
-</a>
-<a class="btn btn-secondary" href="{% url 'cards:delSet' %}">
-    Remove Flashcard Set
-</a>
-{% endblock %}
+    {% else %}
+    <p>No cards are available.</p>
+    {% endif %}
+    <a class="btn btn-secondary" href="{% url 'cards:newSet' %}">
+        Add New Flashcard Set
+    </a>
+    <a class="btn btn-secondary" href="{% url 'cards:delSet' %}">
+        Remove Flashcard Set
+    </a>
+    {% endblock %}
 </div>

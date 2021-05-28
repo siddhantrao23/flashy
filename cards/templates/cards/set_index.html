@@ -3,37 +3,35 @@
 {% block title %}Index - {{ set.set_name }}{% endblock %}
 
 {% block main %}
-<h1>{{ set.set_name }}</h1>
-<h3>{{ set.description }}</h3>
-
-<!--TODO remove error to error.html-->
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">{{ set.set_name }}</h1>
+    <p class="lead text-muted">{{ set.description }}</p>
+    <p>
+      {% if first_card %}
+      <a href="{% url 'cards:card' set.id first_card.id %}">
+        <button class="btn btn-secondary my-2">Start Practice</button>
+      </a>
+      {% endif %}
+      <a href="{% url 'cards:newCard' set.id %}">
+        <button class="btn btn-secondary my-2">Add Card</button>
+      </a>
+      <a href="{% url 'cards:delCard' set.id %}">
+        <button class="btn btn-secondary my-2">Remove Card</button>
+      </a>
+      <a href="{% url 'cards:index' %}">
+        <button class="btn btn-secondary my-2">Back</button>
+      </a>
+    </p>
+  </div>
+</section>
 
 <!-- <ul> -->
-<!--   {% for card in set.card_set.all %} -->
-<!--   <li> -->
-<!--     <h2>{{ card.question_text }}</h2> -->
-<!--     <h3>{{ card.answer_text }}</h3> -->
-<!--   </li> -->
-<!--   {% endfor %} -->
-<!-- </ul> -->
-
-{% if first_card %}
-<a href="{% url 'cards:card' set.id first_card.id %}">
-  <button class="btn btn-primary">Start Practice</button>
-</a>
-{% endif %}
-<br>
-<br>
-<a href="{% url 'cards:newCard' set.id %}">
-  <button class="btn btn-primary">Add Card</button>
-</a>
-<a href="{% url 'cards:delCard' set.id %}">
-  <button class="btn btn-primary">Remove Card</button>
-</a>
-<br>
-<br>
-<a href="{% url 'cards:index' %}">
-  <button class="btn btn-primary">Back</button>
-</a>
+  <!--   {% for card in set.card_set.all %} -->
+  <!--   <li> -->
+    <!--     <h2>{{ card.question_text }}</h2> -->
+    <!--     <h3>{{ card.answer_text }}</h3> -->
+    <!--   </li> -->
+  <!--   {% endfor %} -->
+  <!-- </ul> -->
 {% endblock %}

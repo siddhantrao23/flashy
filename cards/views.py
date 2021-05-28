@@ -8,15 +8,30 @@ from .forms import LoginForm, SetForm, CardForm
 from .forms import DelSetForm, DelCardForm
 
 # homepage view
-class IndexView(generic.ListView):
+class IndexView(View):
     template_name = 'cards/index.html'
-    context_object_name = 'cards_set_list'
 
-    def get_queryset(self):
-        return Set.objects.order_by('-set_name')
+    def get(self, request):
+        set_list = Set.objects.order_by('-set_name')
+        context = {
+            'set_list': set_list,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        if 'delete' in request.POST:
+            selected_set = get_object_or_404(Set, pk=request.POST['delete'])
+            selected_set.delete()
+            return HttpResponseRedirect(reverse('cards:index'))
+        elif 'practice' in request.POST:
+            selected_set = get_object_or_404(Set, pk=request.POST['practice'])
+            first_card = selected_set.card_set.first()
+            if first_card:
+                return HttpResponseRedirect(
+                    reverse('cards:card', args=(selected_set.id, first_card.id)))
 
 # view of a particular set
-class SetIndexView(generic.DetailView):
+class SetIndexView(View):
     template_name = 'cards/set_index.html'
 
     def get(self, request, set_id):
@@ -29,6 +44,7 @@ class SetIndexView(generic.DetailView):
             context['first_card'] = first_card
         # print(context)
         return render(request, self.template_name, context)
+
 
 # view for the card being practiced
 class CardView(View):

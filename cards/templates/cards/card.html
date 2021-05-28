@@ -29,8 +29,10 @@
   </ul>
   {% endif %}
 
-  <a href="{% url 'cards:setIndex' set.id %}">
-    <button class="btn btn-primary">Back</button>
-  </a>
+  <p>
+    <a href="{% url 'cards:setIndex' set.id %}">
+      <button class="btn btn-secondary my-2">Back</button>
+    </a>
+  </p>
 </div>
 {% endblock %}
